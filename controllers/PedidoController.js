@@ -10,9 +10,15 @@ const PedidoController = {
         }
     },
 
+    
     findAll : async (req,res) =>{
         try{
-            const pedidos = await Pedido.findAll();
+            const pedidos = await Pedido.findAll({
+            include: [
+             { association: 'entrega' },
+             { association: 'avaliacao' }
+            ]
+        });
             if (pedidos.length === 0){
                 throw new Error("Não há pedidos");
             }
